@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#20382f"><title>Cafe Boyacıköy — Menü</title>
+<style>
+:root{--forest:#20382f;--cream:#f5efe4;--paper:#fffaf1;--sand:#dfcfb5;--terra:#a95f42;--ink:#2a2824;--muted:#776f65;--gold:#b08a52;--line:rgba(42,40,36,.12)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--ink);font-family:Georgia,"Times New Roman",serif}.wrap{max-width:760px;margin:auto;padding:0 18px}
+.hero{background:var(--forest);color:#fffaf1;padding:30px 0 36px}.eyebrow{font:700 11px Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#d9c49c}h1{font-size:clamp(44px,11vw,74px);line-height:.9;margin:18px 0 14px;font-weight:500;letter-spacing:-.05em}.hero p{max-width:560px;margin:0;color:#ddd5ca;font:15px/1.7 Arial,sans-serif}.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}.pill{border:1px solid #ffffff33;padding:8px 11px;border-radius:99px;font:11px Arial,sans-serif}
+.sticky{position:sticky;top:0;z-index:5;background:#f5efe4ee;backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}.categories{display:flex;gap:8px;overflow:auto;padding:12px 0}.categories button{border:1px solid var(--line);background:transparent;color:var(--forest);padding:9px 13px;border-radius:99px;white-space:nowrap;font:700 11px Arial,sans-serif}.categories button.active{background:var(--forest);color:white}
+main{padding:34px 0 70px}.section{margin-bottom:46px;scroll-margin-top:70px}.section-head{display:flex;justify-content:space-between;gap:15px;align-items:end;border-bottom:1px solid var(--line);padding-bottom:13px;margin-bottom:5px}.section h2{margin:0;font-size:30px;font-weight:500;color:var(--forest)}.section-note{font:11px Arial,sans-serif;color:var(--muted);text-align:right}
+.item{display:grid;grid-template-columns:1fr auto;gap:14px;padding:18px 0;border-bottom:1px dashed #2a282426}.item:last-child{border-bottom:0}.item h3{margin:0 0 5px;font-size:19px;font-weight:600}.item p{margin:0;color:var(--muted);font:13px/1.6 Arial,sans-serif}.price{font:700 15px Arial,sans-serif;color:var(--terra);white-space:nowrap}.badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.badge{font:9px Arial,sans-serif;text-transform:uppercase;letter-spacing:.08em;background:#eadfcd;color:var(--forest);padding:5px 7px;border-radius:99px}.featured{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:0 8px 25px #2a28240a}.featured .item{padding:0;border:0}.featured h3{font-size:23px}
+.note-banner{background:var(--paper);border:1px dashed var(--gold);border-radius:14px;padding:14px 16px;font:12px/1.6 Arial,sans-serif;color:var(--muted);margin-bottom:28px}
+.draft-banner{display:none;background:#fff3d6;border:1px solid var(--gold);color:var(--ink);padding:10px 14px;border-radius:10px;font:12px Arial,sans-serif;justify-content:space-between;gap:10px;align-items:center;margin-bottom:18px}
+.draft-banner button{border:1px solid var(--ink);background:transparent;padding:6px 10px;border-radius:99px;font:700 10px Arial,sans-serif;cursor:pointer;white-space:nowrap}
+.footer{background:var(--forest);color:#fffaf1;padding:34px 0 42px}.footer-grid{display:grid;grid-template-columns:1fr auto;gap:24px}.footer h3{margin:0 0 8px;font-size:23px;font-weight:500}.footer p{margin:0;color:#fffaf1b3;font:12px/1.7 Arial,sans-serif}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}.action{border:1px solid #ffffff40;padding:10px 13px;border-radius:99px;color:#fffaf1;text-decoration:none;font:700 11px Arial,sans-serif}
+@media(max-width:520px){.footer-grid{grid-template-columns:1fr}.section-head{align-items:start}.item{gap:8px}}
+
+/* --- Düzenleme formu --- */
+body.edit-mode main{padding-bottom:130px}
+.edit-fields input,.edit-fields textarea{width:100%;font-family:Arial,sans-serif;font-size:13px;border:1px solid var(--line);border-radius:8px;padding:7px 9px;margin-bottom:6px;background:#fff;color:var(--ink)}
+.edit-fields textarea{resize:vertical;min-height:40px}
+.item.editing{grid-template-columns:1fr auto auto;align-items:start}
+.price-input{max-width:100px;font:700 13px Arial,sans-serif!important;color:var(--terra)!important}
+.del-btn{border:none;background:#a95f4222;color:var(--terra);width:30px;height:30px;border-radius:99px;font:700 16px Arial,sans-serif;cursor:pointer}
+.section-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.add-item-btn,.add-cat-btn{border:1px dashed var(--gold);background:transparent;color:var(--forest);padding:9px 13px;border-radius:10px;font:700 11px Arial,sans-serif;cursor:pointer}
+.del-cat-btn{border:1px dashed var(--terra);background:transparent;color:var(--terra);padding:9px 13px;border-radius:10px;font:700 11px Arial,sans-serif;cursor:pointer}
+.cat-title-input{font:600 22px Georgia,serif!important;border:1px solid var(--line);border-radius:8px;padding:6px 10px;background:#fff;flex:1}
+.cat-note-input{font:11px Arial,sans-serif!important;max-width:170px;border:1px solid var(--line);border-radius:8px;padding:6px 8px;background:#fff}
+.cafe-edit-card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:32px}
+.cafe-edit-card h3{margin:0 0 12px;font-size:18px;color:var(--forest)}
+.cafe-edit-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cafe-edit-grid label{font:700 10px Arial,sans-serif;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);display:block;margin-bottom:4px}
+@media(max-width:560px){.cafe-edit-grid{grid-template-columns:1fr}}
+.admin-bar{position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--forest);color:#fffaf1;padding:12px 14px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;box-shadow:0 -8px 24px rgba(0,0,0,.18)}
+.admin-bar button{border:1px solid #ffffff40;background:transparent;color:#fffaf1;padding:9px 14px;border-radius:99px;font:700 11px Arial,sans-serif;cursor:pointer}
+.admin-bar button.primary{background:var(--gold);border-color:var(--gold);color:#20382f}
+.admin-bar .edit-only{display:none}
+body.edit-mode .admin-bar .edit-only{display:inline-block}
+</style></head>
+<body>
+<header class="hero"><div class="wrap"><div class="eyebrow" id="eyebrow"></div><h1 id="cafeName"></h1><p id="tagline"></p><div class="meta"><span class="pill" id="hours"></span><span class="pill">Ekşi maya fırın</span><span class="pill">Taze makarna</span></div></div></header>
+<nav class="sticky"><div class="wrap"><div class="categories" id="categories"></div></div></nav>
+<main class="wrap">
+  <div class="draft-banner" id="draftBanner"><span>Bu tarayıcıda kaydedilmemiş bir taslak bulundu ve yüklendi. İndirmeden kapatırsan taslak bu cihazda kalır, siteye yansımaz.</span><button id="discardDraftBtn">Taslağı Sil</button></div>
+  <div class="cafe-edit-card" id="cafeEditCard" style="display:none"><h3>Cafe Bilgileri</h3><div class="cafe-edit-grid" id="cafeEditGrid"></div></div>
+  <div id="menu"></div>
+</main>
+<footer class="footer"><div class="wrap footer-grid"><div><h3 id="footerName"></h3><p id="address"></p><p id="footerHours"></p><div class="actions"><a class="action" id="maps" target="_blank">Yol Tarifi</a><a class="action" id="instagram" target="_blank">Instagram</a><a class="action" id="facebook" target="_blank">Facebook</a><a class="action" id="phone">Ara</a><a class="action" id="email">E-posta</a></div></div><div class="eyebrow">Afiyet olsun</div></div></footer>
+
+<div class="admin-bar" id="adminBar">
+  <button id="toggleEditBtn">✏️ Menüyü Düzenle</button>
+  <button id="addCatBtn" class="edit-only">+ Kategori Ekle</button>
+  <button id="editCafeBtn" class="edit-only">Cafe Bilgilerini Düzenle</button>
+  <button id="downloadBtn" class="edit-only primary">İndir (.html)</button>
+</div>
+
+<script>
+/*MENU_START*/
+const MENU = {
+"cafe": {
+  "name": "Cafe Boyacıköy",
+  "eyebrow": "Emirgan · Sarıyer · İstanbul",
+  "tagline": "Boyacıköy'ün sakin sokağında; ev yapımı ekşi maya ekmek, taze açılmış makarna ve günlük hazırlanan tatlılarla samimi bir mola noktası.",
+  "hours": "Her gün · 08:30–19:00",
+  "address": "Emirgan Mahallesi, Fırın Sokak No:36/A, 34467 Sarıyer / İstanbul",
+  "phone": "+90 212 229 32 04",
+  "email": "merhaba@cafeboyacikoy.com",
+  "instagram": "https://www.instagram.com/cafeboyacikoy/",
+  "facebook": "https://www.facebook.com/cafeboyacikoy/",
+  "maps": "https://www.google.com/maps/search/?api=1&query=Emirgan+Mahallesi+F%C4%B1r%C4%B1n+Sokak+No%3A36%2FA+Sar%C4%B1yer+%C4%B0stanbul"
+},
+"categories": [
+  {"id":"kahvalti","title":"Kahvaltı","note":"Günün her saati","items":[
+    {"name":"Kahvaltı Tabağı","desc":"Domates, salatalık, yeşil ve siyah zeytin, kırmızı ve yeşil biber, beyaz peynir, çeçil peyniri, yumurta, poğaça ve ekşi maya ekmekten oluşan doyurucu tabak. Yanında 2 çay ikramı ile.","price":"₺445","badges":["Müdavim seçimi","Tek kişilik"]},
+    {"name":"Boyacıköy Özel Omlet","desc":"3 yumurta, cheddar peyniri ve taze biberler ile hazırlanan Cafe Boyacıköy spesiyali.","price":"₺330","badges":["Müdavim seçimi"]},
+    {"name":"Boyacıköy Omleti","desc":"Cafenin klasik omlet tarifi.","price":"₺190","badges":[]},
+    {"name":"Bahçeden Otlu Çiftlik Omleti","desc":"Taze otlarla hazırlanan çiftlik omleti.","price":"₺215","badges":[]},
+    {"name":"Kültür Mantarlı ve Karabiberli Omlet","desc":"Sotelenmiş kültür mantarı ve karabiberle hazırlanan omlet.","price":"₺215","badges":[]},
+    {"name":"Eriyen Peynirli Tavada Omlet","desc":"Bol peynirli, tavada servis edilen omlet.","price":"₺240","badges":[]},
+    {"name":"Menemen","desc":"Geleneksel tarif ile hazırlanan menemen.","price":"₺250","badges":[]},
+    {"name":"Peynirli Menemen","desc":"Bol peynirli menemen.","price":"₺300","badges":[]}
+  ]},
+  {"id":"tost","title":"Tost & Fırından Taze","note":"Ekşi maya fırın","items":[
+    {"name":"Ev Yapımı Ekşi Maya Tost","desc":"Ev yapımı ekşi maya ekmek, kaşar peyniri, beyaz peynir, domates, biber ve kekik.","price":"₺380","badges":["Müdavim seçimi"]},
+    {"name":"Boyacıköy King Tost","desc":"3 katlı tost ekmeği, pesto sos, domates sos, kaşar peyniri, cheddar peynir ve hindi füme.","price":"₺380","badges":["Müdavim seçimi"]},
+    {"name":"El Yapımı Sade Poğaça","desc":"Günlük fırınlanan sade poğaça.","price":"₺50","badges":[]},
+    {"name":"El Yapımı Peynirli Poğaça","desc":"Günlük fırınlanan peynirli poğaça.","price":"₺55","badges":[]},
+    {"name":"El Yapımı Siyezli Sade Poğaça","desc":"Siyez unuyla hazırlanan sade poğaça.","price":"₺60","badges":[]},
+    {"name":"El Yapımı Siyezli Peynirli Poğaça","desc":"Siyez unuyla hazırlanan peynirli poğaça.","price":"₺65","badges":[]},
+    {"name":"Tereyağlı Kruvasan","desc":"Sade tereyağlı kruvasan.","price":"₺190","badges":[]},
+    {"name":"El Açması Börek","desc":"Günlük el açması börek.","price":"₺125","badges":[]}
+  ]},
+  {"id":"sandvic","title":"Sandviç & Kruvasan","note":"","items":[
+    {"name":"Üç Peynirli Ciabatta Kahvaltı Sandviç","desc":"Zeytin ezmesi, cheddar, çeçil ve beyaz peynir, dana jambon, salatalık, kapya biber ve marul ile hazırlanan ciabatta sandviç.","price":"₺390","badges":["Müdavim seçimi"]},
+    {"name":"Kars Kaşarlı Ciabatta Sandviç","desc":"Kars kaşarı ile hazırlanan ciabatta sandviç.","price":"₺450","badges":[]},
+    {"name":"Tulum Peynirli Ciabatta Sandviç","desc":"Tulum peyniri ile hazırlanan ciabatta sandviç.","price":"₺450","badges":[]},
+    {"name":"Avokadolu Hindi Fümeli Sandviç","desc":"Çırpılmış yumurta, salatalık, domates, marul, roka, avokado ve hindi füme.","price":"₺350","badges":["Müdavim seçimi"]},
+    {"name":"Sade Kruvasan","desc":"Sade tereyağlı kruvasan.","price":"₺190","badges":[]},
+    {"name":"Sürülebilir Çikolatalı Kruvasan","desc":"Sürülebilir çikolata ile servis edilen kruvasan.","price":"₺200","badges":[]},
+    {"name":"Reçelli ve Labneli Kruvasan","desc":"Reçel ve labne ile hazırlanan kruvasan.","price":"₺250","badges":[]},
+    {"name":"Cheddar Peynirli ve Labneli Kruvasan","desc":"Cheddar peyniri ve labne ile hazırlanan kruvasan.","price":"₺300","badges":[]},
+    {"name":"Pesto Soslu & Tulum Peynirli Kruvasan","desc":"Pesto sos, tulum peyniri, roka, yeşillik, domates, salatalık, kapya biber, kekik ve zeytinyağı.","price":"₺410","badges":[]},
+    {"name":"Kars Eski Kaşarlı & Dana Jambonlu Kruvasan","desc":"Kars eski kaşar peyniri, dana jambon, salatalık, domates, marul, roka, pesto sos ve çeşnili labne.","price":"₺380","badges":[]},
+    {"name":"Çırpılmış Yumurtalı Avokadolu Kruvasan","desc":"Pesto sos, tulum peyniri, salatalık, domates, marul ve çeşnili labne.","price":"₺380","badges":[]},
+    {"name":"Hindi Fümeli + Beyaz Peynirli Kruvasan","desc":"Hindi füme, beyaz peynir, pesto sos, tulum peyniri, salatalık, domates, marul.","price":"₺400","badges":[]}
+  ]},
+  {"id":"ilaveler","title":"İlaveler","note":"Sandviç & kruvasanlara ek","items":[
+    {"name":"Avokado","desc":"","price":"₺60","badges":[]},
+    {"name":"Hindi Füme","desc":"","price":"₺35","badges":[]},
+    {"name":"Dana Jambon","desc":"","price":"₺45","badges":[]},
+    {"name":"Çırpılmış Yumurta","desc":"","price":"₺60","badges":[]},
+    {"name":"Haşlanmış Yumurta","desc":"","price":"₺30","badges":[]},
+    {"name":"Bal","desc":"","price":"₺15","badges":[]},
+    {"name":"Roka","desc":"","price":"₺8","badges":[]}
+  ]},
+  {"id":"makarna","title":"Taze Makarna & Mantı","note":"Cafede açılan taze hamur","items":[
+    {"name":"Bolognese Soslu Taze Makarna","desc":"Dana kıyma, mevsim domatesleri ile hazırlanan özel sos, soğan, havuç, baharatlar ve rendelenmiş peynir.","price":"₺495","badges":["Müdavim seçimi"]},
+    {"name":"Kremalı Mantarlı Taze Makarna","desc":"Yoğun krema sosu, sotelenmiş taze kültür mantarları, fesleğen, karabiber ve maydanoz.","price":"₺485","badges":[]},
+    {"name":"Kremalı Tavuklu Taze Makarna","desc":"Krema ile harmanlanmış yumuşak tavuk göğsü parçaları, kekik ve özel baharat karışımı.","price":"₺495","badges":[]},
+    {"name":"Kremalı Tavuklu Mantarlı Taze Makarna","desc":"Doğranmış tavuk parçaları, taze mantar, krema sosu, sarımsak çeşnisi ve taze baharatlar.","price":"₺495","badges":[]},
+    {"name":"Napolitan Soslu Taze Makarna","desc":"Taze domatesler, zeytinyağı, sarımsak ve taze fesleğen ile hazırlanan hafif ve klasik domates sosu.","price":"₺425","badges":[]},
+    {"name":"Kıymalı Taze Lazanya","desc":"Taze açılmış kat kat lazanya yaprakları arasında bol kıymalı bolognese sos, beşamel sos ve üzeri kızarmış kaşar peyniri.","price":"₺515","badges":["İmza ürün"]},
+    {"name":"Cafe Boyacıköy Mantısı","desc":"Geleneksel usul kıymalı mantı; süzme yoğurt, sarımsak ve tereyağlı pul biberli sos eşliğinde.","price":"₺460","badges":["Müdavim seçimi","İmza ürün"]}
+  ]},
+  {"id":"salata","title":"Salatalar","note":"Bahçeden","items":[
+    {"name":"Kinoalı Salata","desc":"Kinoa, salatalık, domates, mısır, yeşillik, kapya biber, yeşil biber.","price":"₺470","badges":[]},
+    {"name":"Tavuklu Yeşil Salata","desc":"Kıvırcık marul, zeytinyağında sotelenmiş tavuk parçaları, kapya biber, domates, salatalık, dereotu, maydanoz, mısır, sızma zeytinyağı, hakiki nar ekşisi.","price":"₺440","badges":[]},
+    {"name":"Ton Balıklı Salata","desc":"Göbek marul, roka, salatalık, domates, ton balığı, mısır, zeytinyağı, limon suyu, közlenmiş kırmızı biber, kornişon turşu.","price":"₺515","badges":[]},
+    {"name":"Hellim Peynirli Salata","desc":"Mevsim yeşillikleri, hellim peyniri (4 dilim), kuru domates, kapya biber, salatalık, havuç, domates, zeytinyağı, limon sosu.","price":"₺420","badges":[]},
+    {"name":"Avokado Salatası","desc":"Avokado, yeşillik, ceviz, ay çekirdeği, domates, salatalık.","price":"₺410","badges":[]},
+    {"name":"Akdeniz Salata","desc":"Mevsim yeşillikleri, beyaz peynir (4 dilim), siyah zeytin, mısır, domates, salatalık, kapya biber, havuç, kekik, zeytinyağı, limon sosu.","price":"₺420","badges":[]}
+  ]},
+  {"id":"yan-urun","title":"Yan Ürünler","note":"Salatalara ek","items":[
+    {"name":"Yoğurt","desc":"","price":"₺50","badges":[]},
+    {"name":"Haşlanmış Yumurta","desc":"","price":"₺30","badges":[]},
+    {"name":"Beyaz Peynir","desc":"","price":"₺70","badges":[]},
+    {"name":"Karışık Zeytin","desc":"","price":"₺55","badges":[]},
+    {"name":"Ekşi Maya Ekmek","desc":"","price":"₺30","badges":[]}
+  ]},
+  {"id":"tatli","title":"Tatlılar","note":"Günlük hazırlanır","items":[
+    {"name":"Cafe Boyacıköy Profiterol","desc":"Özel reçeteli puf hamuru içinde yoğun kıvamlı el yapımı pastacı kreması ve ılık servis edilen ipeksi Belçika çikolatası sosu ile.","price":"₺240","badges":["Yeni ürün"]},
+    {"name":"Erikli Tart","desc":"Tereyağlı tart hamuru üzerinde mevsimin en taze erikleriyle fırınlanmış; hafif mayhoş ve dengeli bir tatlı.","price":"₺220","badges":[]},
+    {"name":"Cafe Boyacıköy Limonlu Cheesecake","desc":"Çıtır bisküvi tabanı üzerinde ipeksi krem peynir dolgusu ve günlük el yapımı limon curd sosu ile.","price":"₺240","badges":[]},
+    {"name":"Coffee Mousse","desc":"Yoğun espresso aromalı, hafif ve ipeksi dokulu mousse; alt katmanda brownie, üzerinde taze kakao.","price":"₺220","badges":[]},
+    {"name":"Tiramisu","desc":"İtalyan usulü taze mascarpone peyniri ve espressoya batırılmış kedidili bisküvileri; üzerinde taze kakao ile.","price":"₺240","badges":["En çok satan"]},
+    {"name":"Brownie","desc":"Dışı hafif çıtır, içi yoğun ve nemli; %54 kakao oranlı Belçika çikolatası ve taze tereyağı ile hazırlanan klasik.","price":"₺240","badges":[]},
+    {"name":"Tahinli Cevizli Çıtır","desc":"İncecik çıtır baklava yufkası içinde yoğun tahin ve iri çekilmiş taze ceviz; üzerine hafif pudra şekeri ile.","price":"₺110","badges":["İmza ürün"]},
+    {"name":"Elmalı Kurabiye","desc":"Tarçın kokulu taze elma harcı ve kıyır kıyır hamurla, klasik bir çocukluk hatırası.","price":"₺65","badges":[]},
+    {"name":"Kek Çeşitleri","desc":"Çay ve kahve saatlerinin eşlikçisi, kaliteli çikolata ve taze meyve parçacıklarıyla zenginleştirilmiş artisan kekler.","price":"₺165","badges":[]},
+    {"name":"Kurabiye Çeşitleri","desc":"Her sabah taze çıkan, taze tereyağı ve kaliteli malzemelerle hazırlanan kurabiye seçkisi.","price":"₺125","badges":[]},
+    {"name":"Cookie Çeşitleri","desc":"Dışı çıtır, içi Amerikan usulü yumuşak ve nemli; bol Belçika çikolatası parçacıklı cookie.","price":"₺110","badges":[]},
+    {"name":"Cevizli Bitter Çikolatalı Tart","desc":"Gevrek tart tabanı üzerinde %70 kakao oranlı bitter ganaj ve kıtır cevizlerle hazırlanan yetişkin tatlısı.","price":"₺240","badges":[]}
+  ]},
+  {"id":"sicak","title":"Sıcak İçecekler","note":"%100 Arabica","items":[
+    {"name":"Caffé Espresso","desc":"%100 Arabica çekirdeklerden hazırlanan espresso.","price":"₺180","badges":[]},
+    {"name":"Filtre Kahve","desc":"Günün çekirdeğiyle hazırlanan filtre kahve.","price":"₺180","badges":[]},
+    {"name":"Caffé Americano","desc":"","price":"₺180","badges":[]},
+    {"name":"Caffé Latte","desc":"","price":"₺200","badges":[]},
+    {"name":"Caffé Cappuccino","desc":"","price":"₺200","badges":[]},
+    {"name":"Klasik Türk Kahvesi","desc":"Geleneksel usul pişirilen Türk kahvesi.","price":"₺165","badges":[]},
+    {"name":"Geleneksel Türk Çayı","desc":"","price":"₺60","badges":[]},
+    {"name":"Ihlamur & Bal","desc":"Kurutulmuş ıhlamur çiçeklerinin French press'te süzülen şifası.","price":"₺180","badges":["Mevsim yıldızı"]},
+    {"name":"Adaçayı & Taze Limon","desc":"Taze limon ile demlenen adaçayı.","price":"₺180","badges":[]},
+    {"name":"Nane & Limon Ferahlığı","desc":"Taze nane yaprakları ve limonun canlandırıcı uyumu; her yudumda yenilenin.","price":"₺180","badges":[]},
+    {"name":"Kış Çayı (Hibiskuslu Özel Karışım)","desc":"Hibiskus, zencefil, tarçın ve karanfilin French press'te harmanlanan yoğun aromalı gücü.","price":"₺180","badges":[]}
+  ]},
+  {"id":"soguk","title":"Soğuk İçecekler","note":"Serinletici","items":[
+    {"name":"Ice Caffé Latte","desc":"","price":"₺200","badges":[]},
+    {"name":"Ice Caffé Americano","desc":"","price":"₺190","badges":[]},
+    {"name":"Boyacıköy Bahçe Limonatası","desc":"Ev yapımı, mevsimin en taze meyveleriyle hazırlanan limonata.","price":"₺220","badges":[]},
+    {"name":"Taze Sıkma Portakal Suyu","desc":"","price":"₺220","badges":[]},
+    {"name":"Coca Cola","desc":"","price":"₺95","badges":[]},
+    {"name":"Coca Cola Zero","desc":"","price":"₺95","badges":[]},
+    {"name":"Sade Soda","desc":"","price":"₺75","badges":[]},
+    {"name":"Meyve Aromalı Soda","desc":"","price":"₺75","badges":[]},
+    {"name":"Su 330 ml","desc":"","price":"₺65","badges":[]},
+    {"name":"Su 750 ml","desc":"","price":"₺95","badges":[]}
+  ]}
+]
+};
+/*MENU_END*/
+
+/* ============================================================
+   GÜVENLİK AYARI — SADECE SEN GÖR
+   Menüyü düzenleme paneli artık normal ziyaretçilerden tamamen
+   gizli. Aşağıdaki iki değeri kendine göre değiştirebilirsin:
+
+   1) ADMIN_URL_KEY: Paneli açmak için siteye şu şekilde girmen
+      gerekir:  senin-sitenin-linki/?panel=BURAYA_YAZDIĞIN_KELİME
+   2) ADMIN_PASSWORD: Panel linkine girdikten sonra "Menüyü
+      Düzenle" butonuna basınca sorulacak şifre.
+
+   Not: Bu statik bir site olduğu için, sayfa kaynak kodunu
+   inceleyecek kadar teknik bilgisi olan biri bu değerleri
+   görebilir. Ama normal bir müşteri QR kodu okuttuğunda bu
+   butonu hiç görmeyecek, hiç fark etmeyecek bile — asıl
+   çözdüğümüz sorun buydu.
+   ============================================================ */
+const ADMIN_URL_KEY = "boyaci2026";
+const ADMIN_PASSWORD = "kafe36emirgan";
+
+function hasAdminAccess(){
+  const params = new URLSearchParams(location.search);
+  return params.get('panel') === ADMIN_URL_KEY;
+}
+
+const STORAGE_KEY = 'cafeBoyacikoyMenuDraft';
+let editMode = false;
+
+function escapeHtml(s){ return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function escapeAttr(s){ return escapeHtml(s).replace(/"/g,'&quot;'); }
+
+const $=s=>document.querySelector(s);
+const catsEl=$("#categories"), menuEl=$("#menu"), draftBanner=$("#draftBanner");
+const cafeEditCard=$("#cafeEditCard"), cafeEditGrid=$("#cafeEditGrid");
+
+function saveDraft(){ try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(MENU)); }catch(e){ console.warn('Taslak kaydedilemedi', e); } }
+
+function loadDraftIfAny(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(raw){
+      const parsed = JSON.parse(raw);
+      if(parsed && parsed.cafe && parsed.categories){
+        Object.assign(MENU.cafe, parsed.cafe);
+        MENU.categories = parsed.categories;
+        if(hasAdminAccess()) draftBanner.style.display='flex';
+      }
+    }
+  }catch(e){ console.warn('Taslak okunamadı', e); }
+}
+
+$("#discardDraftBtn").onclick = ()=>{ localStorage.removeItem(STORAGE_KEY); location.reload(); };
+
+function renderCafeHeader(){
+  $("#eyebrow").textContent=MENU.cafe.eyebrow;
+  $("#cafeName").textContent=MENU.cafe.name;
+  $("#footerName").textContent=MENU.cafe.name;
+  $("#tagline").textContent=MENU.cafe.tagline;
+  $("#hours").textContent=MENU.cafe.hours;
+  $("#footerHours").textContent=MENU.cafe.hours;
+  $("#address").textContent=MENU.cafe.address;
+  $("#phone").href="tel:"+MENU.cafe.phone.replace(/\s/g,"");
+  $("#email").href="mailto:"+MENU.cafe.email;
+  $("#maps").href=MENU.cafe.maps;
+  $("#instagram").href=MENU.cafe.instagram;
+  $("#facebook").href=MENU.cafe.facebook;
+}
+
+function renderCafeEditCard(){
+  if(!editMode){ cafeEditCard.style.display='none'; return; }
+  const fields=[
+    ["name","İşletme Adı"],["eyebrow","Üst Etiket (konum)"],["tagline","Tanıtım Cümlesi"],
+    ["hours","Çalışma Saatleri"],["address","Adres"],["phone","Telefon"],["email","E-posta"],
+    ["instagram","Instagram Linki"],["facebook","Facebook Linki"],["maps","Google Maps Linki"]
+  ];
+  cafeEditGrid.innerHTML = fields.map(([key,label])=>`<div><label>${escapeHtml(label)}</label><input type="text" data-cafe-field="${key}" value="${escapeAttr(MENU.cafe[key]||'')}"></div>`).join('');
+  cafeEditGrid.querySelectorAll('input').forEach(inp=>{
+    inp.oninput = e=>{ MENU.cafe[inp.dataset.cafeField] = e.target.value; renderCafeHeader(); saveDraft(); };
+  });
+}
+
+function renderMenu(){
+  catsEl.innerHTML = MENU.categories.map((c,i)=>`<button class="${i===0?'active':''}" data-target="${c.id}">${escapeHtml(c.title)}</button>`).join('');
+
+  menuEl.innerHTML = MENU.categories.map((c,ci)=>{
+    const itemsHtml = c.items.map((x,ii)=>{
+      if(editMode){
+        return `<article class="item editing" data-cat="${ci}" data-item="${ii}">
+          <div class="edit-fields">
+            <input type="text" class="f-name" placeholder="Ürün adı" value="${escapeAttr(x.name)}">
+            <textarea class="f-desc" placeholder="Açıklama">${escapeHtml(x.desc||'')}</textarea>
+            <input type="text" class="f-badges" placeholder="Etiketler (virgülle ayır, örn: Müdavim seçimi, Yeni ürün)" value="${escapeAttr((x.badges||[]).join(', '))}">
+          </div>
+          <input type="text" class="price-input f-price" placeholder="₺0" value="${escapeAttr(x.price)}">
+          <button class="del-btn" title="Ürünü sil" type="button">×</button>
+        </article>`;
+      }
+      const featured = ii===0 && x.badges && x.badges.includes('Müdavim seçimi') ? 'featured' : '';
+      const badgesHtml = x.badges && x.badges.length ? `<div class="badges">${x.badges.map(b=>`<span class="badge">${escapeHtml(b)}</span>`).join('')}</div>` : '';
+      return `<article class="item ${featured}"><div><h3>${escapeHtml(x.name)}</h3><p>${escapeHtml(x.desc||'')}</p>${badgesHtml}</div><div class="price">${escapeHtml(x.price)}</div></article>`;
+    }).join('');
+
+    const head = editMode
+      ? `<input type="text" class="cat-title-input f-cat-title" data-cat="${ci}" value="${escapeAttr(c.title)}"><input type="text" class="cat-note-input f-cat-note" data-cat="${ci}" placeholder="Not (örn. Günün her saati)" value="${escapeAttr(c.note||'')}">`
+      : `<h2>${escapeHtml(c.title)}</h2><div class="section-note">${escapeHtml(c.note||'')}</div>`;
+
+    const actions = editMode ? `<div class="section-actions"><button class="add-item-btn" data-cat="${ci}" type="button">+ Ürün Ekle</button><button class="del-cat-btn" data-cat="${ci}" type="button">Kategoriyi Sil</button></div>` : '';
+
+    return `<section class="section" id="${c.id}"><div class="section-head">${head}</div>${itemsHtml}${actions}</section>`;
+  }).join('');
+
+  attachHandlers();
+}
+
+function attachHandlers(){
+  catsEl.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    document.getElementById(b.dataset.target).scrollIntoView({behavior:'smooth'});
+    catsEl.querySelectorAll('button').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+  });
+
+  if(!editMode) return;
+
+  menuEl.querySelectorAll('.item.editing').forEach(el=>{
+    const ci=+el.dataset.cat, ii=+el.dataset.item;
+    el.querySelector('.f-name').oninput = e=>{ MENU.categories[ci].items[ii].name=e.target.value; saveDraft(); };
+    el.querySelector('.f-desc').oninput = e=>{ MENU.categories[ci].items[ii].desc=e.target.value; saveDraft(); };
+    el.querySelector('.f-price').oninput = e=>{ MENU.categories[ci].items[ii].price=e.target.value; saveDraft(); };
+    el.querySelector('.f-badges').oninput = e=>{ MENU.categories[ci].items[ii].badges=e.target.value.split(',').map(s=>s.trim()).filter(Boolean); saveDraft(); };
+    el.querySelector('.del-btn').onclick = ()=>{
+      if(confirm('Bu ürünü silmek istediğine emin misin?')){ MENU.categories[ci].items.splice(ii,1); saveDraft(); renderMenu(); }
+    };
+  });
+
+  menuEl.querySelectorAll('.add-item-btn').forEach(btn=>{
+    btn.onclick=()=>{
+      const ci=+btn.dataset.cat;
+      MENU.categories[ci].items.push({name:'Yeni Ürün', desc:'', price:'₺0', badges:[]});
+      saveDraft(); renderMenu();
+    };
+  });
+
+  menuEl.querySelectorAll('.del-cat-btn').forEach(btn=>{
+    btn.onclick=()=>{
+      const ci=+btn.dataset.cat;
+      if(confirm('Bu kategoriyi ve içindeki tüm ürünleri silmek istediğine emin misin?')){ MENU.categories.splice(ci,1); saveDraft(); renderMenu(); }
+    };
+  });
+
+  menuEl.querySelectorAll('.f-cat-title').forEach(inp=>{
+    inp.oninput=e=>{ const ci=+inp.dataset.cat; MENU.categories[ci].title=e.target.value; saveDraft(); if(catsEl.children[ci]) catsEl.children[ci].textContent=e.target.value; };
+  });
+  menuEl.querySelectorAll('.f-cat-note').forEach(inp=>{
+    inp.oninput=e=>{ const ci=+inp.dataset.cat; MENU.categories[ci].note=e.target.value; saveDraft(); };
+  });
+}
+
+$("#toggleEditBtn").onclick = ()=>{
+  if(!editMode){
+    const pass = prompt('Menüyü düzenlemek için şifreyi gir:');
+    if(pass === null) return;
+    if(pass !== ADMIN_PASSWORD){ alert('Şifre yanlış.'); return; }
+  }
+  editMode = !editMode;
+  document.body.classList.toggle('edit-mode', editMode);
+  $("#toggleEditBtn").textContent = editMode ? '✔ Düzenlemeyi Bitir' : '✏️ Menüyü Düzenle';
+  renderCafeEditCard();
+  renderMenu();
+};
+
+$("#addCatBtn").onclick = ()=>{
+  const id='kategori-'+Date.now();
+  MENU.categories.push({id, title:'Yeni Kategori', note:'', items:[{name:'Yeni Ürün', desc:'', price:'₺0', badges:[]}]});
+  saveDraft(); renderMenu();
+};
+
+$("#editCafeBtn").onclick = ()=>{
+  cafeEditCard.style.display = cafeEditCard.style.display==='none' ? 'block' : 'none';
+};
+
+$("#downloadBtn").onclick = ()=>{
+  const wasEdit = editMode;
+  if(wasEdit){
+    editMode=false;
+    document.body.classList.remove('edit-mode');
+    cafeEditCard.style.display='none';
+    renderMenu();
+  }
+  draftBanner.style.display='none';
+
+  let html = '<!doctype html>\n' + document.documentElement.outerHTML;
+  const newBlock = '/*MENU_START*/\nconst MENU = ' + JSON.stringify(MENU, null, 2) + ';\n/*MENU_END*/';
+  html = html.replace(/\/\*MENU_START\*\/[\s\S]*?\/\*MENU_END\*\//, newBlock);
+
+  const blob = new Blob([html], {type:'text/html'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'cafe-boyacikoy-menu.html';
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+
+  if(wasEdit){
+    editMode=true;
+    document.body.classList.add('edit-mode');
+    renderCafeEditCard();
+    renderMenu();
+  }
+};
+
+if(!hasAdminAccess()){
+  document.getElementById('adminBar').style.display = 'none';
+}
+
+loadDraftIfAny();
+renderCafeHeader();
+renderCafeEditCard();
+renderMenu();
+</script>
+</body></html>
